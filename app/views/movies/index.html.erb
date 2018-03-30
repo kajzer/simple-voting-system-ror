@@ -2,28 +2,35 @@
 
 <h1>Movies</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Image</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @movies.each do |movie| %>
-      <tr>
-        <td><%= movie.title %></td>
-        <td><%= movie.image %></td>
-        <td><%= link_to 'Show', movie %></td>
-        <td><%= link_to 'Edit', edit_movie_path(movie) %></td>
-        <td><%= link_to 'Destroy', movie, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
 <%= link_to 'New Movie', new_movie_path %>
+
+<hr>
+
+  <% @movies.each do |movie| %>
+  
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail thumb-box"> 
+      <h2 style="text-align:center;"><%= movie.title %></h2>
+      <%= image_tag(movie.image, size: "250x300") %>
+      <div class="caption" style="text-align:center;">
+        <%= link_to like_movie_path(movie), class: "like", method: :put do %>
+          <button class="btn btn-default" type="button" aria-label="Left Align">
+            <span class="glyphicon glyphicon-thumbs-up glyphicon-align-center" aria-hidden="true"></span>
+            <span class="badge"><%= movie.get_upvotes.size %></span>
+          </button>
+        <% end %>
+        
+        <%= link_to unlike_movie_path(movie), class: "like", method: :put do %>
+          <button class="btn btn-default" type="button" aria-label="Left Align">
+            <span class="glyphicon glyphicon-thumbs-down glyphicon-align-center" aria-hidden="true"></span>
+            <span class="badge"><%= movie.get_downvotes.size %></span>
+          </button>
+        <% end %>
+      </div>
+    </div> 
+  </div>
+  
+  <% end %>
+
+
+
